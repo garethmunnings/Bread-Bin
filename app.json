@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "bread_tracker",
     "name": "bread_tracker",
     "slug": "bread_tracker",
     "version": "1.0.0",
@@ -24,6 +25,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }

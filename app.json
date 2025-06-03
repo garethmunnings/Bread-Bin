@@ -1,7 +1,7 @@
 {
   "expo": {
     "expo.web.output": "static",
-    "scheme": ["bread_tracker"],
+    "scheme": ["breadtracker"],
     "platforms": ["ios", "android", "web"],
     "name": "bread_tracker",
     "slug": "bread_tracker",

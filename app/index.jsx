@@ -125,6 +125,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between', 
   },
     container: {
+        alignSelf: 'center',
+        width: 500,
         paddingTop: 60,
         paddingHorizontal: 20,
         flex: 1,

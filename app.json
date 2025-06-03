@@ -1,6 +1,8 @@
 {
   "expo": {
-    "scheme": "bread_tracker",
+    "expo.web.output": "static",
+    "scheme": ["bread_tracker"],
+    "platforms": ["ios", "android", "web"],
     "name": "bread_tracker",
     "slug": "bread_tracker",
     "version": "1.0.0",
@@ -28,6 +30,18 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "29f97558-8f19-4a05-a058-b403cee09962"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/29f97558-8f19-4a05-a058-b403cee09962"
+    }
   }
 }

@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
     container: {
         alignSelf: 'center',
-        width: 500,
+        width: 400,
         paddingTop: 60,
         paddingHorizontal: 20,
         flex: 1,

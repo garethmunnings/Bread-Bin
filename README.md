@@ -31,3 +31,4 @@ Web: [Bread Bin Website](https://breadbin--9jsftvuxd5.expo.app/)
 - Connect the app to a shared cloud database so that it can actually be used by myself and my family
 - Enable real-time updates so any family member can add or remove bread loaves
 - Add notifications to remind when bread is near expiry
+- Fix some exceptions and make the UI a little nicer (more styling)

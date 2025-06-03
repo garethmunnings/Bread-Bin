@@ -4,40 +4,93 @@ import { View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet }
 export default function App() {
   const [breads, setBreads] = useState([]);
   const [breadType, setBreadType] = useState('');
-  const [breadExpiryDate, setExpiry] = useState('');
+  const [breadExpiryYear, setExpiryYear] = useState('');
+  const [breadExpiryMonth, setExpiryMonth] = useState('')
+  const [breadExpiryDay, setExpiryDay] = useState('')
+  const [n, setOpacity] = useState(0);
+
 
   const addBread = () => {
-    if (breadType.trim() === '') return;
-    const dateArr = breadExpiryDate.split("/")
-    const num = parseInt(str, dateArr[0]);
-    if (isNaN(num) || !Number.isInteger(num))
-    {
-        return
+    if(!inputIsValid()) {
+        setOpacity(1);
+        return;
     }
+
+    const expiryDate = new Date(`${breadExpiryYear}-${breadExpiryMonth}-${breadExpiryDay}`);
 
     const newBread = {
         type: breadType,
-        expiryDate: breadExpiryDate,
+        expiryDate: expiryDate,
     };
     
     setBreads([...breads, newBread]);
     setBreadType('');
-    setExpiry('');
+    setExpiryYear('');
+    setExpiryMonth('');
+    setExpiryDay('');
+    setOpacity(0);
+  }
+
+  const removeBread = (indexToRemove) => {
+    const updatedBreads = breads.filter((_, index) => index !== indexToRemove);
+    setBreads(updatedBreads);
+    };
+
+
+  function inputIsValid() {
+    //Type
+    if (breadType.trim() === '') return false;
+    
+    //Year
+    if(!Number.isInteger(Number(breadExpiryYear)) || breadExpiryYear.trim() === '') return false;
+
+    //Month
+    if(!Number.isInteger(Number(breadExpiryMonth)) || breadExpiryMonth.trim() === '') return false;
+
+    //Day
+    if(!Number.isInteger(Number(breadExpiryDay)) || breadExpiryDay.trim() === '') return false;
+
+    return true;
   }
 
   return (
     <View style={styles.container}>
         <Text style={styles.title}>Bread Bin</Text>
 
-        {breads.map((bread, index) => (
-            <Text key={index} style={styles.breadItem}>
-                {bread.type} - Expires: {bread.expiryDate}
-            </Text>
-        ))}
+        {breads.map((bread, index) => {
+            const isExpired = new Date(bread.expiryDate) < new Date();
+            return (
+                <View
+                    key={index}
+                    style={[styles.breadItem, 
+                    isExpired && 
+                    styles.expired, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}>
+                    <View>
+                        <Text>
+                            {bread.type} - Expires: {new Date(bread.expiryDate).toDateString()}
+                            {isExpired && <Text style={styles.expiredLabel}> (Expired)</Text>}
+                        </Text>
+                </View>
+                <TouchableOpacity
+                    onPress={() => removeBread(index)}
+                    style={[styles.removeButton,
+                            isExpired ? styles.removeButtonExpired : styles.removeButtonNormal,]}>
+                    <Text style={{ color: 'white' }}>-</Text>
+                </TouchableOpacity>
+                </View>
+            );
+        })}
         <View style={styles.inputContainer}>
             <View style={styles.row}>
                 <TextInput placeholder='bread type' value={breadType} onChangeText={setBreadType} style={styles.input}/>
-                <TextInput placeholder='yyyy/mm/dd' value={breadExpiryDate} onChangeText={setExpiry} style={styles.input}/>
+                <TextInput placeholder='yyyy' value={breadExpiryYear} onChangeText={setExpiryYear} style={styles.inputDate}/>
+                <Text style = {styles.inputDateSlash}>/</Text>
+                <TextInput placeholder='mm' value={breadExpiryMonth} onChangeText={setExpiryMonth} style={styles.inputDate}/>
+                <Text style = {styles.inputDateSlash}>/</Text>
+                <TextInput placeholder='dd' value={breadExpiryDay} onChangeText={setExpiryDay} style={styles.inputDate}/>
+            </View>
+            <View>
+                <Text style = {{opacity: n}}>Invalid input</Text>
             </View>
             
         </View>
@@ -50,6 +103,20 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+    removeButton: {
+        borderRadius: 12,
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        marginLeft: 10,
+    },
+
+    removeButtonExpired: {
+        backgroundColor: 'red',
+    },
+
+    removeButtonNormal: {
+        backgroundColor: 'gray',
+    },
     inputContainer: {
         padding: 20,
     },
@@ -75,6 +142,20 @@ const styles = StyleSheet.create({
         padding: 8,
         flex: 1,                   
         marginHorizontal: 5, 
+    },
+    inputDate: {
+        borderRadius: 0,
+        marginHorizontal: 0, 
+        textAlign: 'center',
+        backgroundColor: '#f0f0f0', 
+        padding: 0,
+        width: 50,                   
+    },
+    inputDateSlash: {
+        backgroundColor: '#f0f0f0',
+        textAlign: 'center',
+        paddingTop: 9,
+        flex: 0,                   
     },
     breadItem: {
         padding: 12,

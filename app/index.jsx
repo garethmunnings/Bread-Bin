@@ -50,6 +50,10 @@ export default function App() {
     //Day
     if(!Number.isInteger(Number(breadExpiryDay)) || breadExpiryDay.trim() === '') return false;
 
+    //Date
+    const date = new Date(breadExpiryYear + "-" + breadExpiryMonth + "-" + breadExpiryDay);
+    if(isNaN(date.getTime())) return false;
+
     return true;
   }
 
@@ -67,7 +71,9 @@ export default function App() {
                     styles.expired, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}>
                     <View>
                         <Text>
-                            {bread.type} - Expires: {new Date(bread.expiryDate).toDateString()}
+                            {`${bread.type} - Expires on ${
+                            new Date(bread.expiryDate).toLocaleDateString('en-US', { weekday: 'long' })} (${
+                            new Date(bread.expiryDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })})`}
                             {isExpired && <Text style={styles.expiredLabel}> (Expired)</Text>}
                         </Text>
                 </View>
@@ -82,20 +88,20 @@ export default function App() {
         })}
         <View style={styles.inputContainer}>
             <View style={styles.row}>
-                <TextInput placeholder='bread type' value={breadType} onChangeText={setBreadType} style={styles.input}/>
-                <TextInput placeholder='yyyy' value={breadExpiryYear} onChangeText={setExpiryYear} style={styles.inputDate}/>
+                <TextInput placeholder='bread type' placeholderTextColor="#888" value={breadType} onChangeText={setBreadType} style={styles.input}/>
+                <TextInput placeholder='yyyy' placeholderTextColor="#888" value={breadExpiryYear} onChangeText={setExpiryYear} style={styles.inputDate}/>
                 <Text style = {styles.inputDateSlash}>/</Text>
-                <TextInput placeholder='mm' value={breadExpiryMonth} onChangeText={setExpiryMonth} style={styles.inputDate}/>
+                <TextInput placeholder='mm' placeholderTextColor="#888" value={breadExpiryMonth} onChangeText={setExpiryMonth} style={styles.inputDate}/>
                 <Text style = {styles.inputDateSlash}>/</Text>
-                <TextInput placeholder='dd' value={breadExpiryDay} onChangeText={setExpiryDay} style={styles.inputDate}/>
+                <TextInput placeholder='dd' placeholderTextColor="#888" value={breadExpiryDay} onChangeText={setExpiryDay} style={styles.inputDate}/>
             </View>
-            <View>
-                <Text style = {{opacity: n}}>Invalid input</Text>
-            </View>
-            
         </View>
-
-        <Button title = "Add loaf" onPress={addBread}></Button>
+        <View style={{alignSelf: 'center', alignItems: 'center', padding: 10}}>
+                <Text style = {{opacity: n, color: 'red'}}>Invalid input</Text>
+        </View>
+        <TouchableOpacity style={styles.button} onPress={addBread}>
+            <Text style={styles.buttonText}>Add loaf</Text>
+        </TouchableOpacity>
         
         
     </View>
@@ -103,6 +109,16 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+    button: {
+        backgroundColor: '#c29367',
+        padding: 12,
+        borderRadius: 8,
+    },
+    buttonText: {
+        textAlign: 'center',
+        color: 'white',
+        fontWeight: 'bold',
+    },
     removeButton: {
         borderRadius: 12,
         paddingHorizontal: 10,
@@ -118,7 +134,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'gray',
     },
     inputContainer: {
-        padding: 20,
+        paddingTop: 20,
     },
     row: {
         flexDirection: 'row',

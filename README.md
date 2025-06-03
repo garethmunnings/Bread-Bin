@@ -25,7 +25,8 @@ iOS (Expo Go): [Open in Expo Go](https://expo.dev/accounts/garethmunnings/projec
 
 Android (Expo Go): [Open in Expo Go](https://expo.dev/accounts/garethmunnings/projects/bread_tracker/fingerprints/b223be1d7181124aa76eda77902b0e226b55bff3)
 
-Web: [Bread Bin Website](https://breadbin--9jsftvuxd5.expo.app/)
+Web: [Bread Bin Website](https://breadbin--yvnq764cak.expo.app)
+
 
 ## Future plans
 - Connect the app to a shared cloud database so that it can actually be used by myself and my family
